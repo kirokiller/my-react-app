@@ -1,5 +1,5 @@
 import "./App.css";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import { routes } from "./routes";
 import {
   BrowserRouter as Router,
@@ -15,11 +15,6 @@ const menuData = [
   { name: "关于", url: "/about" },
 ];
 
-const breadcrumbNameMap: any = {
-  "/": "home",
-  "/about": "about",
-};
-
 function RouteWithSubRoutes(route: any) {
   return (
     <Route
@@ -33,22 +28,6 @@ function RouteWithSubRoutes(route: any) {
 }
 
 const Home = withRouter((props) => {
-  const { location } = props;
-  const pathSnippets = location.pathname.split("/").filter((i) => i);
-  const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
-    return (
-      <Breadcrumb.Item key={url}>
-        <Link to={url}>{breadcrumbNameMap[url]}</Link>
-      </Breadcrumb.Item>
-    );
-  });
-  // const breadcrumbItems = [
-  //   <Breadcrumb.Item key="home">
-  //     <Link to="/">Home</Link>
-  //   </Breadcrumb.Item>,
-  // ].concat(extraBreadcrumbItems);
-  const breadcrumbItems = extraBreadcrumbItems;
   return (
     <Layout className="layout">
       <Header>
@@ -63,7 +42,6 @@ const Home = withRouter((props) => {
         </Menu>
       </Header>
       <Content style={{ padding: "0 50px" }}>
-        <Breadcrumb>{breadcrumbItems}</Breadcrumb>
         <div className="site-layout-content">
           <Switch>
             {routes.map((route, i) => (
