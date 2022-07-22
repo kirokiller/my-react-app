@@ -20,12 +20,13 @@ const Search = () => {
     };
   }, [keyWord]);
 
+  console.log("Search: render");
   return (
     <div>
       <Input value={keyWord} onChange={setKeyWord} />
       <div>
         {result.map((item, index) => (
-          <div>item {index}</div>
+          <div key={index}>item {index}</div>
         ))}
       </div>
     </div>
@@ -37,12 +38,12 @@ interface InputProps {
   onChange: (value: string) => void;
 }
 const Input: React.FC<InputProps> = ({ value, onChange }, forwardRef) => {
-  const inputRef = useRef<InputRef>(null);
-  useImperativeHandle(forwardRef, () => ({
+  // const inputRef = useRef<any>(null);
+  /* useImperativeHandle(forwardRef, () => ({
     focus: () => {
       inputRef.current && inputRef.current.focus();
     },
-  }));
+  })); */
 
   const handleChange = useMemo(
     () => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +52,7 @@ const Input: React.FC<InputProps> = ({ value, onChange }, forwardRef) => {
     [onChange]
   );
 
-  return <input onChange={handleChange} value={value} ref={inputRef} />;
+  return <input onChange={handleChange} value={value} /* ref={inputRef} */ />;
 };
 
 export default Search;
